@@ -86,3 +86,65 @@ class Jogador {
     this.inventario = [];
   }
 }
+
+// Arrays do game
+ 
+// Detalhes sobre cada minério
+const MINERIOS = [
+  new Minerio("Pedra",    "Comum",    1,    60,  0,  0),
+  new Minerio("Carvão",   "Comum",    3,    25,  0,  0),
+  new Minerio("Ferro",    "Incomum",  8,    12,  5,  1),
+  new Minerio("Prata",    "Raro",     25,   6,   15, 2),
+  new Minerio("Ouro",     "Épico",    80,   3,   30, 2),
+  new Minerio("Rubi",     "Lendário", 250,  1.2, 50, 3),
+  new Minerio("Diamante", "Mítico",   1000, 0.4, 80, 4),
+];
+ 
+// nome, durabilidade, custo
+const DADOS_PICARETAS = [
+  ["Madeira", 40, 0],
+  ["Pedra", 80, 50],
+  ["Ferro", 150, 250],
+  ["Aço", 300, 1000],
+  ["Diamante", 600, 5000],
+];
+ 
+function criarPicareta(nivel) {
+  let d = DADOS_PICARETAS[nivel];
+  return new Picareta(nivel, d[0], d[1], d[2]);
+}
+ 
+
+const CASAS = [
+  { nome: "Barraco de lona", custo: 0 },
+  { nome: "Casa de madeira", custo: 800 },
+  { nome: "Casa de tijolos", custo: 4000 },
+  { nome: "Casa na colina", custo: 20000 },   // final do jogo
+];
+ 
+// Perigos(Formas de game over/Perigo)
+const PERIGOS = [
+  {
+    nome: "Lava",
+    profundidadeMinima: 10,
+    mortal: true,
+    mensagem: "💀 Você cavou direto numa bolsa de LAVA...",
+    chance(prof) { return Math.min(0.005 + prof * 0.0004, 0.06); },
+  },
+  {
+    nome: "Topeira gigante",
+    profundidadeMinima: 20,
+    mortal: true,
+    mensagem: "☠️ Uma TOPEIRA GIGANTE surgiu da escuridão e te engoliu inteiro!",
+    chance(prof) { return Math.min(0.004 + prof * 0.0003, 0.05); },
+  },
+  {
+    nome: "Desabamento",
+    profundidadeMinima: 5,
+    mortal: false,
+    mensagem: "💥 Desabamento! Você escapou, mas a picareta tomou dano (-10).",
+    chance(prof) { return 0.015; },
+  },
+];
+ 
+const PICADAS_POR_DIA = 10;
